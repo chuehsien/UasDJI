@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/layout/djiactivity.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/layout/djiactivity.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/layout/activity_main.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/layout/log_dialog_view.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/layout/log_dialog_view.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/layout/djivid.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/layout/djivid.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/layout/dji_video.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/layout/dji_video.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/layout/hello_world_layout.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/layout/hello_world_layout.xml"
+    }
+]

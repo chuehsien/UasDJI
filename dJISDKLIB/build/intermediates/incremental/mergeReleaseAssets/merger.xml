@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/dJISDKLIB/src/main/assets"/><source path="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/dJISDKLIB/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/dJISDKLIB/src/release/assets"/></dataSet></merger>

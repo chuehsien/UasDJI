@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/libs"/></dataSet><dataSet config="debug"><source path="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build-types/debug/jniLibs"/></dataSet></merger>

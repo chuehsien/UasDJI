@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/jars/libs/bouncycastle.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="629f56ae2c4ec8f3dd3f938b23c7af9a9a0a1a62">
+        <dex dex="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/pre-dexed/debug/bouncycastle_a544708c0d06a7c934fb62a5ae8b22ed314d2141.jar" />
+    </item>
+    <item
+        jar="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/jars/libs/dji_gson.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="b788aeeb222b85fc132b5c0cd9483a823c136195">
+        <dex dex="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/pre-dexed/debug/dji_gson_a0bb438a85b8152bc18a9c2bcba95a29d74492fe.jar" />
+    </item>
+    <item
+        jar="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/jars/libs/dji-sdk.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="0fe35dabddaa849074c4a41fc3841a40f66cb232">
+        <dex dex="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/pre-dexed/debug/dji-sdk_37c6e9e39889da939d0ed76d2b117172724bb285.jar" />
+    </item>
+    <item
+        jar="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/jars/libs/dji_eventbus.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="652e30e4c42f1feabeb696f67fdee274968e1bd3">
+        <dex dex="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/pre-dexed/debug/dji_eventbus_74144987401ec120ff51472549de5e2dfae5a1f0.jar" />
+    </item>
+    <item
+        jar="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="072b0ba35bf779fc24210010a3f0f33c85ab6f54">
+        <dex dex="/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/pre-dexed/debug/UasDJI-dJISDKLIB-unspecified_386120ba17a66b64f1f3e4f08704a159f8024a0c.jar" />
+    </item>
+
+</items>

@@ -1,0 +1,119 @@
+apply plugin: 'android'
+apply plugin: 'idea'
+
+dependencies {
+    provided files('../../../ATAK/libs/android-support-v4.jar')
+    provided files('../../../ATAK/libs/core-14.0.2.1.jar')
+    provided files('../../../ATAK/libs/host-14.0.2.1.jar')
+    provided files('../../../MapCoreInterfaces/libs/commons.geom.jar')
+    provided files('../../../MapCoreInterfaces/libs/commons.mapi.core.jar')
+    provided files('../../../MapCoreInterfaces/libs/ExtensionPoints.jar')
+    provided files('../../../MapCoreInterfaces/build/libs/classes.jar')
+    provided files('../../../CoTService/build/libs/classes.jar')
+    provided files('../../../ATAKMapEngine/build/libs/classes.jar')
+    provided files('../../../ATAK/build/libs/classes.jar')
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile project(':dJISDKLIB')
+}
+
+def getSvnRevision() {
+    new ByteArrayOutputStream().withStream { os ->
+        def result = exec {
+            executable = 'svn'
+            args = ['info']
+            standardOutput = os
+        }
+        def outputAsString = os.toString()
+        def matchLastChangedRev = outputAsString =~ /Revision: (\d+)/
+ 
+        ext.svnRev = "${matchLastChangedRev[0][1]}".toInteger()
+    }
+ 
+    return svnRev
+}
+
+def getSvnSource() {
+    new ByteArrayOutputStream().withStream { os ->
+        def result = exec {
+            executable = 'svn'
+            args = ['info']
+            standardOutput = os
+        }
+        def outputAsString = os.toString()
+        def matchLastChangedRev = outputAsString =~ /Working Copy Root Path: (\d+)/
+        ext.name = matchLastChangedRev.replaceFirst(~/\.[^\.]+$/, '') 
+    }
+ 
+    return name
+ 
+}
+
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "23.0.3"
+
+   dexOptions {
+        jumboMode = true
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("../../../android_keystore")
+            storePassword "tnttnt"
+            keyAlias "wintec_mapping"
+            keyPassword "tnttnt"
+        }
+
+        release {
+            storeFile file("../../../android_keystore")
+            storePassword "tnttnt"
+            keyAlias "wintec_mapping"
+            keyPassword "tnttnt"
+        }
+    }
+
+
+    buildTypes {
+        release {
+            System.setProperty("atak.proguard.mapping", "../../../ATAK/build/outputs/mapping/release/mapping.txt")
+            minifyEnabled true
+            proguardFile 'proguard-gradle.txt'
+            signingConfig signingConfigs.release
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+    }
+
+    sourceSets {
+        main {
+            defaultConfig.versionCode = 0
+            defaultConfig.versionName = 0
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src/aidl']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+
+
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+
+    }
+
+}

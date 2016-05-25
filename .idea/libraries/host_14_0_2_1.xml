@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="host-14.0.2.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../ATAK/libs/host-14.0.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

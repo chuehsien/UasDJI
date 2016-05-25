@@ -1,0 +1,70 @@
+[
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/btn_gray_disabled.9.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/btn_gray_disabled.9.png"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/radio_unchecked.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/drawable/radio_unchecked.png"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/btn_lock_selector.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/drawable/btn_lock_selector.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/selector_back_button.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/selector_back_button.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/back_button_disable.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/back_button_disable.png"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/btn_gray_default.9.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/btn_gray_default.9.png"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/btn_zoom_selector.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/drawable/btn_zoom_selector.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/abc.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/abc.png"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/btn_gray_selected.9.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/btn_gray_selected.9.png"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/btn_radio_selector.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/drawable/btn_radio_selector.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/back_button_normal.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/back_button_normal.png"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/ic_launcher.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/ic_launcher.png"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/btn_gray.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/btn_gray.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/roundbutton.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/roundbutton.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/radio_checked.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/drawable/radio_checked.png"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/home.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/home.png"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/drawable/back_button_press.png",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/drawable/back_button_press.png"
+    }
+]

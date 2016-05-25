@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:orientation="vertical" >
+
+<ScrollView
+    android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fadeScrollbars="false"
+    android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp">
+
+<LinearLayout
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:orientation="vertical" >
+   <TextView
+       android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Hello, World" />
+   <Button android:id="@+id/smallerButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Smaller" />
+   <Button android:id="@+id/largerButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Larger" />
+
+   <Button android:id="@+id/video1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Video1" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/video1text"/>
+
+   <Button android:id="@+id/fly"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Fly" />
+   <Button android:id="@+id/specialWheelMarker"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Special Marker" />
+   <Button android:id="@+id/listRoutes"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="List Routes" />
+   <Button android:id="@+id/showSeachIcon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Show Search Icon" />
+   <Button android:id="@+id/addXRoute"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Add Route" />
+   <Button android:id="@+id/reXRoute"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Reroute" />
+</LinearLayout>
+</ScrollView>
+</LinearLayout>

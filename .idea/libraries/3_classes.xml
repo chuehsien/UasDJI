@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="3_classes">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../ATAKMapEngine/build/libs/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ExtensionPoints">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../MapCoreInterfaces/libs/ExtensionPoints.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="commons.mapi.core">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../MapCoreInterfaces/libs/commons.mapi.core.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
