@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.atakmap.android.UasDJI.test">
 
-    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="22" />
 
     <application>
         <uses-library android:name="android.test.runner" />

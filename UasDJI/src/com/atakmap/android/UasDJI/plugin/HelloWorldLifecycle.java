@@ -13,6 +13,7 @@ import com.atakmap.android.maps.MapView;
 import com.example.chueh.aidl.atakservice.IATAKService;
 
 
+import dji.sdk.Codec.DJICodecManager;
 import transapps.maps.plugin.lifecycle.Lifecycle;
 import android.app.Activity;
 import android.app.Service;
@@ -126,6 +127,7 @@ public class HelloWorldLifecycle implements Lifecycle {
         }
     }
     void initConnection() {
+
          mActivityMessenger = new Messenger(
                 new ActivityHandler());
 //        AddServiceConnection = new ServiceConnection() {
@@ -182,6 +184,7 @@ public class HelloWorldLifecycle implements Lifecycle {
         if (!mBound) {
             Log.d(TAG,"binding to service");
             Intent intent = new Intent("com.example.chueh.skynetdji.ATAKServiceHandler");
+            intent.setPackage("com.example.chueh.skynetdji");
             // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getPluginContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
         }
@@ -205,6 +208,7 @@ public class HelloWorldLifecycle implements Lifecycle {
                     Log.d(TAG,"Received pfd from service");
                     ParcelFileDescriptor pfd = msg.getData().getParcelable("pfd");
                     setReadPfd(pfd);
+                    Toast.makeText(pluginContext, "Conencted to DJI app", Toast.LENGTH_SHORT).show();
                 }
             }
         }

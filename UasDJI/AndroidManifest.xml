@@ -3,7 +3,7 @@
     android:versionCode="1"
     android:versionName="DEV" >
 
-    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22" />
 
 
     <!-- DJI SDK -->

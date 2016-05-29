@@ -5,8 +5,8 @@
     android:versionName="0" >
 
     <uses-sdk
-        android:minSdkVersion="15"
-        android:targetSdkVersion="15" />
+        android:minSdkVersion="16"
+        android:targetSdkVersion="22" />
 
     <!-- DJI SDK -->
     <!-- DJI SDK need permission -->

@@ -120,8 +120,9 @@ public final class R {
         public static final int button1=0x7f0b0014;
         public static final int button2=0x7f0b0015;
         public static final int button3=0x7f0b0016;
-        public static final int connect=0x7f0b0019;
+        public static final int connect=0x7f0b0018;
         public static final int demi=0x7f0b0003;
+        public static final int dji_video_surface=0x7f0b001a;
         public static final int djiframe=0x7f0b0017;
         public static final int djivideofrag=0x7f0b0010;
         public static final int fly=0x7f0b001f;
@@ -143,8 +144,7 @@ public final class R {
         public static final int showSeachIcon=0x7f0b0022;
         public static final int smallerButton=0x7f0b001b;
         public static final int specialWheelMarker=0x7f0b0020;
-        public static final int stream=0x7f0b001a;
-        public static final int textview=0x7f0b0018;
+        public static final int stream=0x7f0b0019;
         public static final int timer=0x7f0b000f;
         public static final int video1=0x7f0b001d;
         public static final int video1text=0x7f0b001e;

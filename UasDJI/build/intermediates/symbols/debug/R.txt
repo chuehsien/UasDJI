@@ -77,8 +77,9 @@ int id btn_shoot_photo_mode 0x7f0b000d
 int id button1 0x7f0b0014
 int id button2 0x7f0b0015
 int id button3 0x7f0b0016
-int id connect 0x7f0b0019
+int id connect 0x7f0b0018
 int id demi 0x7f0b0003
+int id dji_video_surface 0x7f0b001a
 int id djiframe 0x7f0b0017
 int id djivideofrag 0x7f0b0010
 int id fly 0x7f0b001f
@@ -100,8 +101,7 @@ int id reXRoute 0x7f0b0024
 int id showSeachIcon 0x7f0b0022
 int id smallerButton 0x7f0b001b
 int id specialWheelMarker 0x7f0b0020
-int id stream 0x7f0b001a
-int id textview 0x7f0b0018
+int id stream 0x7f0b0019
 int id timer 0x7f0b000f
 int id video1 0x7f0b001d
 int id video1text 0x7f0b001e
