@@ -25,12 +25,12 @@ public class HelloWorldTool extends Tool implements ToolDescriptor {
 
     @Override
     public String getDescription() {
-        return "HelloWorld Tool";
+        return "SKYNET DJI";
     }
 
     @Override
     public Drawable getIcon() {
-        return (context == null) ? null : context.getResources().getDrawable(R.drawable.ic_launcher);
+        return (context == null) ? null : context.getResources().getDrawable(R.drawable.skynetlogo_small);
     }
 
     @Override

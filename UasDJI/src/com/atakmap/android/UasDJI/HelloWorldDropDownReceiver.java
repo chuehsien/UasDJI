@@ -3,10 +3,17 @@ package com.atakmap.android.UasDJI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.SurfaceTexture;
+import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.app.AlertDialog;
@@ -16,7 +23,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.atakmap.android.UasDJI.DJI.DJIBackgroundApp;
 import com.atakmap.android.UasDJI.plugin.HelloWorldLifecycle;
 import com.atakmap.android.maps.MapActivity;
 import com.atakmap.android.maps.MapComponent;
@@ -39,6 +45,8 @@ import android.graphics.Color;
 import android.util.Base64;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ByteArrayOutputStream;
@@ -50,12 +58,20 @@ import com.atakmap.android.routes.RouteMapReceiver;
 
 import android.util.Log;
 
-import org.bouncycastle.util.encoders.Hex;
+import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfRect;
+import org.opencv.core.Size;
+import org.opencv.imgproc.CLAHE;
+import org.opencv.imgproc.Imgproc;
+import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.InputStreamReader;
 import java.util.UUID;
 
-import dji.sdk.Codec.DJICodecManager;
+import static org.opencv.core.Core.flip;
 
 
 public class HelloWorldDropDownReceiver extends DropDownReceiver implements
@@ -69,7 +85,6 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
     private  Route r;
 
-    private DJICodecManager mCodecManager = null;
     /**************************** CONSTRUCTOR *****************************/
     public static HelloWorldDropDownReceiver _self;
     public static HelloWorldDropDownReceiver getInstance(){
@@ -81,6 +96,10 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
     public TextView tv;
     ReceiverThread mReceiver;
     public TextureView djiVideoSurface;
+    public TextureView djiOverlaySurface;
+    private static final int VIDEO_HEIGHT = 720;
+    private static final int VIDEO_WIDTH = 960;
+
     Renderer mRenderer;
     MediaCodecDecoder mDecoder;
 
@@ -103,7 +122,7 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
         connectB.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                HelloWorldLifecycle.getInstance().sayHello();
+                HelloWorldLifecycle.getInstance().initConnectionWithService();
             }
         });
 
@@ -133,188 +152,38 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
             djiVideoSurface.setSurfaceTextureListener(mDecoder);
         }
 
+        if (!OpenCVLoader.initDebug()) {
+            Log.e(TAG,"opencv init error!");// Handle initialization error
+        }
 
-//        final Button fly = (Button)helloView.findViewById(R.id.fly);
-//        fly.setOnClickListener(new OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                  new Thread(new Runnable() {
-//                      public void run() {
-//                         getMapView().getMapController().zoomTo(.00001d, false);
-//                         for (int i = 0; i < 20; ++i) {
-//                              getMapView().getMapController().panTo(new GeoPoint(42, -79 - (double)i/100), false);
-//                              try {
-//                                  Thread.sleep(1000);
-//                              } catch (Exception e) { }
-//                         }
-//                      }
-//                  }).start();
-//            }
-//        });
-//
-//        final Button wheel = (Button)helloView.findViewById(R.id.specialWheelMarker);
-//        wheel.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                  createUnit();
-//
-//            }
-//        });
-//
-//        final Button listRoutes = (Button)helloView.findViewById(R.id.listRoutes);
-//        listRoutes.setOnClickListener(new OnClickListener() {
-//             @Override
-//             public void onClick(View v) {
-//                RouteMapReceiver routeMapReceiver = getRouteMapReceiver();
-//                if (routeMapReceiver == null)
-//                      return;
-//
-//
-//                AlertDialog.Builder builderSingle = new AlertDialog.Builder(
-//                        mapView.getContext());
-//                builderSingle.setTitle("Select a Route");
-//                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-//                        pluginContext,
-//                        android.R.layout.select_dialog_singlechoice);
-//
-//                for (Route route : routeMapReceiver.getCompleteRoutes()) {
-//                    arrayAdapter.add(route.getTitle());
-//                }
-//                builderSingle.setNegativeButton("Cancel",
-//                        new DialogInterface.OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(DialogInterface dialog,
-//                                    int which) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                builderSingle.setAdapter(arrayAdapter, null);
-//                builderSingle.show();
-//             }
-//
-//        });
-//
-//
-//        final Button showSearchIcon = (Button)helloView.findViewById(R.id.showSeachIcon);
-//        showSearchIcon.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "sending broadcast SHOW_MY_WACKY_SEARCH");
-//               Intent intent = new Intent("SHOW_MY_WACKY_SEARCH");
-//               com.atakmap.android.ipc.AtakBroadcast.getInstance().sendBroadcast(intent);
-//
-//            }
-//        });
-//
-//        final Button addRoute = (Button)helloView.findViewById(R.id.addXRoute);
-//        addRoute.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "creating a quick route");
-//                GeoPoint sp = getMapView().getPointWithElevation();
-//                r = new Route(getMapView(),
-//                                    "My Route",
-//                                    Color.WHITE, "CP",
-//                                    UUID.randomUUID().toString());
-//
-//
-//                Marker m[] = new Marker[5];
-//                for (int i = 0; i < 5; ++i) {
-//                     GeoPoint x = new GeoPoint(sp.getLatitude() + (i*.0001),
-//                                               sp.getLongitude(),
-//                                               Altitude.UNKNOWN,
-//                                               GeoPoint.CE90_UNKNOWN, GeoPoint.LE90_UNKNOWN,
-//                                               GeoPointSource.UNKNOWN);
-//
-//                     // the first call will trigger a refresh each time across all of the route points
-//                     //r.addMarker(Route.createWayPoint(x, UUID.randomUUID().toString()));
-//                     m[i] = Route.createWayPoint(x, UUID.randomUUID().toString());
-//                }
-//                r.addMarkers(0, m);
-//
-//                MapGroup _mapGroup = getMapView().getRootGroup()
-//                     .findMapGroup("Route");
-//                _mapGroup.addItem(r);
-//
-//                r.persist(getMapView().getMapEventDispatcher(), null,
-//                       this.getClass());
-//                Log.d(TAG, "route created");
-//
-//
-//
-//
-//            }
-//        });
-//
-//        final Button reRoute = (Button)helloView.findViewById(R.id.reXRoute);
-//        reRoute.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (r == null) {
-//                   Toast.makeText(getMapView().getContext(), "No Route added during this run",
-//                                        Toast.LENGTH_SHORT).show();
-//                   return;
-//                }
-//
-//                GeoPoint sp = getMapView().getPointWithElevation();
-//                Marker m[] = new Marker[16];
-//                for (int i = 1; i < m.length; ++i) {
-//                     if (i % 2 == 0) {
-//                         GeoPoint x = new GeoPoint(sp.getLatitude() - (i*.0001),
-//                                               sp.getLongitude() + (i*.0001),
-//                                               Altitude.UNKNOWN,
-//                                               GeoPoint.CE90_UNKNOWN, GeoPoint.LE90_UNKNOWN,
-//                                               GeoPointSource.UNKNOWN);
-//
-//                         // the first call will trigger a refresh each time across all of the route points
-//                         //r.addMarker(2, Route.createWayPoint(x, UUID.randomUUID().toString()));
-//                         m[i-1] = Route.createWayPoint(x, UUID.randomUUID().toString());
-//                     } else {
-//                         GeoPoint x = new GeoPoint(sp.getLatitude() + (i*.0002),
-//                                               sp.getLongitude() + (i*.0002),
-//                                               Altitude.UNKNOWN,
-//                                               GeoPoint.CE90_UNKNOWN, GeoPoint.LE90_UNKNOWN,
-//                                               GeoPointSource.UNKNOWN);
-//                         m[i-1] = Route.createControlPoint(x, UUID.randomUUID().toString());
-//                     }
-//                }
-//                r.addMarkers(2, m);
-//            }
-//        });
 
+
+        djiOverlaySurface = (TextureView) helloView.findViewById(R.id.dji_overlay_surface);
+//        mRenderer = new Renderer();
+//        mRenderer.start();
+        mRenderer = new Renderer();
+        mRenderer.start();
+
+        if (null != djiOverlaySurface) {
+            djiOverlaySurface.setSurfaceTextureListener(mRenderer);
+            djiOverlaySurface.setAlpha(0.99f);
+        }
 
     }
 
-    private void manipulateFakeContentProvider() { 
-        return;
-        // // delete all the records and the table of the database provider
-        // String URL = "content://com.javacodegeeks.provider.Birthday/friends";
-        // Uri friends = Uri.parse(URL);
-        // int count = pluginContext.getContentResolver().delete(
-        //          friends, null, null);
-        // String countNum = "Javacodegeeks: "+ count +" records are deleted.";
-        // Toast.makeText(getMapView().getContext(),
-        //           countNum, Toast.LENGTH_LONG).show();
-
-        // String[] names = new String[] { "Joe", "Bob", "Sam", "Carol" };
-        // String[] dates = new String[] { "01/01/2001", "01/01/2002", "01/01/2003", "01/01/2004" };
-        // for (int i = 0; i < names.length; ++i) { 
-        //     ContentValues values = new ContentValues();
-        //     values.put(BirthProvider.NAME, names[i]);
-        //     values.put(BirthProvider.BIRTHDAY, dates[i]);
-        //     Uri uri = pluginContext.getContentResolver().insert(BirthProvider.CONTENT_URI, values);
-        //     Toast.makeText(getMapView().getContext(), 
-        //        "Javacodegeeks: " + uri.toString() + " inserted!", Toast.LENGTH_LONG).show();
-        // }
-
-
-        
-    }
 
     /**************************** PUBLIC METHODS *****************************/
 
+    public void updateProductStatus(String s){
+        Button streamB = (Button) helloView.findViewById(R.id.stream);
+        if (!s.contains("Connected")){
+            streamB.setEnabled(false);
+        }else{
+            streamB.setEnabled(true);
+        }
+        TextView status = (TextView) helloView.findViewById(R.id.statustext);
+        status.setText(s);
+    }
     public static String bytesToHexString(byte[] bytes, int count){
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < count; i++){
@@ -328,74 +197,6 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
     public void disposeImpl() {
     }
-
-    class Renderer extends Thread implements TextureView.SurfaceTextureListener{
-        private Object mLock = new Object();        // guards mSurfaceTexture, mDone
-        private boolean mDone;
-        SurfaceTexture mSurfaceTexture = null;
-        @Override
-        public void run() {
-            Log.d(TAG,"Thread started!");
-            while (true) {
-                SurfaceTexture surfaceTexture = null;
-
-                // Latch the SurfaceTexture when it becomes available.  We have to wait for
-                // the TextureView to create it.
-                synchronized (mLock) {
-                    while (!mDone && (surfaceTexture = mSurfaceTexture) == null) {
-                        try {
-                            Log.d(TAG,"Thread waiting!");
-                            mLock.wait();
-                        } catch (InterruptedException ie) {
-                            throw new RuntimeException(ie);     // not expected
-                        }
-                    }
-                    if (mDone) {
-                        break;
-                    }
-                }
-                Log.d("bitmap", "Got surfaceTexture=" + surfaceTexture);
-
-                // Render frames until we're told to stop or the SurfaceTexture is destroyed.
-                //doAnimation();
-            }
-
-//        Log.d(TAG, "Renderer thread exiting");
-        }
-
-        @Override
-        public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-            Log.d(TAG, "onSurfaceTextureAvailable");
-            if (mCodecManager == null) {
-                mCodecManager = new DJICodecManager(HelloWorldLifecycle.getInstance().getActivity(), surfaceTexture, i, i1);
-            }
-            synchronized (mLock) {
-                mSurfaceTexture = surfaceTexture;
-                mLock.notify();
-            }
-        }
-
-        @Override
-        public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-
-        }
-
-        @Override
-        public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-            synchronized (mLock) {
-                mSurfaceTexture = null;
-            }
-            return true;
-
-        }
-
-        @Override
-        public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-
-        }
-    }
-
-
 
     class ReceiverThread extends Thread{
         byte[] buffer = new byte[2048]; // Adjust if you want
@@ -490,53 +291,53 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
         public void run(){
             Log.d(TAG, "service: Thread running");
 
-//            ByteArrayOutputStream delimBuilder = new ByteArrayOutputStream(7);
+            ByteArrayOutputStream delimBuilder = new ByteArrayOutputStream(7);
             while (true) {
                 try {
-                    int br;
-                    while ((br = is.read(buffer)) != -1) {
-                        newStripedPacket(buffer, br);
-                    }
-
-//                    //find delim
-//                    delimBuilder.reset();
-//                    int b;
-//                    collectedStripedPacket.reset();
-//
-//                    while ((b = is.read()) != -1) {
-//                       // Log.d(TAG, "Searching for delimL: " + b);
-//                        delimBuilder.write(b);
-//                        byte[] test = delimBuilder.toByteArray();
-//                        int len = test.length;
-//                        if (len < 7) continue;
-//                        if (test[len - 7] == 0 && test[len - 6] == 0 && test[len - 5] == 1 && test[len - 4] == 0 && test[len - 3] == 0) {
-//                            delimBuilder.reset();
-//                            int packetsize = (((test[len - 2]) & 0xFF) << 8) + ((test[len - 1]) & 0xFF);//look at last 7 bytes
-//                            // Log.d(TAG,"size from delim: " + packetsize);
-//                            int br;
-//                            int totalsize = 0;
-//                            int sizeToRead = packetsize;
-//                            while ((br = is.read(buffer, 0, sizeToRead)) != -1) {
-//                                totalsize += br;
-//                                collectedStripedPacket.write(buffer, 0, br);
-//                                if (totalsize != packetsize) {
-//                                    sizeToRead = packetsize - totalsize;
-//                                    continue;
-//                                } else {
-//                                    byte[] stripedPacket = collectedStripedPacket.toByteArray();
-//                                    //send buffer for next stage processing
-//                                    //Log.d(TAG,"Todecoder: " + stripedPacket.length + "- " + bytesToHexString(stripedPacket,stripedPacket.length));
-//                                    newStripedPacket(stripedPacket, stripedPacket.length);
-//
-//                                    break;
-//                                }
-//
-//                            }
-//                            break;
-//                        } else {
-//                            //delim not found
-//                        }
+//                    int br;
+//                    while ((br = is.read(buffer)) != -1) {
+//                        newStripedPacket(buffer, br);
 //                    }
+
+                    //find delim
+                    delimBuilder.reset();
+                    int b;
+                    collectedStripedPacket.reset();
+
+                    while ((b = is.read()) != -1) {
+                       // Log.d(TAG, "Searching for delimL: " + b);
+                        delimBuilder.write(b);
+                        byte[] test = delimBuilder.toByteArray();
+                        int len = test.length;
+                        if (len < 7) continue;
+                        if (test[len - 7] == 0 && test[len - 6] == 0 && test[len - 5] == 1 && test[len - 4] == 0 && test[len - 3] == 0) {
+                            delimBuilder.reset();
+                            int packetsize = (((test[len - 2]) & 0xFF) << 8) + ((test[len - 1]) & 0xFF);//look at last 7 bytes
+                            // Log.d(TAG,"size from delim: " + packetsize);
+                            int br;
+                            int totalsize = 0;
+                            int sizeToRead = packetsize;
+                            while ((br = is.read(buffer, 0, sizeToRead)) != -1) {
+                                totalsize += br;
+                                collectedStripedPacket.write(buffer, 0, br);
+                                if (totalsize != packetsize) {
+                                    sizeToRead = packetsize - totalsize;
+                                    continue;
+                                } else {
+                                    byte[] stripedPacket = collectedStripedPacket.toByteArray();
+                                    //send buffer for next stage processing
+                                    //Log.d(TAG,"Todecoder: " + stripedPacket.length + "- " + bytesToHexString(stripedPacket,stripedPacket.length));
+                                    newStripedPacket(stripedPacket, stripedPacket.length);
+
+                                    break;
+                                }
+
+                            }
+                            break;
+                        } else {
+                            //delim not found
+                        }
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -674,6 +475,358 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
             return "";
          }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public class Renderer extends Thread implements TextureView.SurfaceTextureListener {
+        private Object mLock = new Object();        // guards mSurfaceTexture, mDone
+        private boolean mDone;
+
+        private int mWidth;     // from SurfaceTexture
+        private int mHeight;
+        //haar
+        private CascadeClassifier haar_faceClassifier = null;
+        private CascadeClassifier haar_sideClassifier = null;
+
+        private CascadeClassifier lbp_faceClassifier = null;
+        private CascadeClassifier lbp_sideClassifier = null;
+
+        private Mat mat = null;
+        private Mat mat1 = null;
+        private int mAbsoluteFaceSize   = 0;
+        private float mRelativeFaceSize   = 0.02f;
+        SurfaceTexture mSurfaceTexture = null;
+        public Renderer() {
+            super("TextureViewCanvas Renderer");
+
+
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                SurfaceTexture surfaceTexture = null;
+
+                // Latch the SurfaceTexture when it becomes available.  We have to wait for
+                // the TextureView to create it.
+                synchronized (mLock) {
+                    while (!mDone && (surfaceTexture = mSurfaceTexture) == null) {
+                        try {
+                            mLock.wait();
+                        } catch (InterruptedException ie) {
+                            throw new RuntimeException(ie);     // not expected
+                        }
+                    }
+                    if (mDone) {
+                        break;
+                    }
+                }
+                Log.d("bitmap", "Got surfaceTexture=" + surfaceTexture);
+
+                // Render frames until we're told to stop or the SurfaceTexture is destroyed.
+                doAnimation();
+            }
+
+//        Log.d(TAG, "Renderer thread exiting");
+        }
+
+        /**
+         * Draws updates as fast as the system will allow.
+         * <p>
+         * In 4.4, with the synchronous buffer queue queue, the frame rate will be limited.
+         * In previous (and future) releases, with the async queue, many of the frames we
+         * render may be dropped.
+         * <p>
+         * The correct thing to do here is use Choreographer to schedule frame updates off
+         * of vsync, but that's not nearly as much fun.
+         */
+
+
+        private void doAnimation() {
+
+            // Create a Surface for the SurfaceTexture.
+            Surface surface = null;
+            synchronized (mLock) {
+                SurfaceTexture surfaceTexture = mSurfaceTexture;
+                if (surfaceTexture == null) {
+                    Log.d("bitmap", "ST null on entry");
+                    return;
+                }
+                surface = new Surface(surfaceTexture);
+            }
+
+
+            Paint myPaint = new Paint();
+            myPaint.setColor(Color.rgb(255, 255, 255));
+            myPaint.setStrokeWidth(8);
+            myPaint.setStyle(Paint.Style.STROKE);
+
+
+            Paint borderPaint = new Paint();
+            borderPaint.setColor(Color.rgb(0x29, 0x80, 0xb9));
+            borderPaint.setStrokeWidth(10);
+            borderPaint.setStyle(Paint.Style.STROKE);
+
+
+            prepareClassifiers();
+
+            CLAHE clahe = Imgproc.createCLAHE(2.0, new Size(8, 8));
+            int bitmapH = 0;
+            int bitmapW = 0;
+            Canvas canvas = null;
+            while (true) {
+                try {
+
+                    if (mSurfaceTexture == null) break;
+                    canvas = surface.lockCanvas(null);
+
+                    if (canvas == null) {
+                        Log.e("classify", "lockCanvas() failed");
+                        break;
+                    }
+                    canvas.drawColor(0, PorterDuff.Mode.CLEAR); //clear canvas of previosu rectangle
+
+                    if (mAbsoluteFaceSize == 0) {
+                        int height = 0;
+                        if (bitmapH != 0) {
+                            height = bitmapH / 2;
+                        } else {
+                            height = canvas.getHeight() / 2;
+                        }
+                        if (Math.round(height * mRelativeFaceSize) > 0) {
+                            mAbsoluteFaceSize = Math.round(height * mRelativeFaceSize);
+                        }
+                    }
+
+
+                    if (bitmapW == 0 || bitmapH == 0) {
+                        Bitmap b0 = djiVideoSurface.getBitmap();
+                        bitmapW = b0.getWidth();
+                        bitmapH = b0.getHeight();
+                    }
+
+                    Bitmap b = Bitmap.createScaledBitmap(djiVideoSurface.getBitmap(), bitmapW / 2, bitmapH / 2, false);
+//                    Bitmap b = djiVideoSurface.getBitmap();
+                    if (mat == null) mat = new Mat(b.getWidth(), b.getHeight(), CvType.CV_8UC1);
+                    if (mat1 == null) mat1 = new Mat(b.getWidth(), b.getHeight(), CvType.CV_8UC1);
+                    Mat grayMat = new Mat();
+
+
+                    Utils.bitmapToMat(b, mat);
+                    Imgproc.cvtColor(mat, mat1, Imgproc.COLOR_BGR2GRAY);
+                    clahe.apply(mat1, grayMat);
+
+                    Mat grayMat_flipped = new Mat();
+                    flip(grayMat, grayMat_flipped, 1);
+
+                    MatOfRect faces0 = new MatOfRect();
+                    haar_faceClassifier.detectMultiScale(grayMat, faces0, 1.1, 4, 2, new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
+                    MatOfRect faces1 = new MatOfRect();
+                    haar_sideClassifier.detectMultiScale(grayMat, faces1, 1.1, 4, 2, new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
+                    MatOfRect faces2 = new MatOfRect();
+                    haar_sideClassifier.detectMultiScale(grayMat_flipped, faces2, 1.1, 4, 2, new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
+
+                    //Log.d(TAG,"num faces: " + faces0.size());
+                    for (org.opencv.core.Rect face : faces0.toArray()) {
+                        int top = (int) (face.tl().y *2) ;
+                        int left = (int) (face.tl().x*2) ;
+                        int bottom = (int) (face.br().y*2) ;
+                        int right = (int) (face.br().x*2) ;
+//                        Log.d(TAG,"Drawing: " + left + " , " + top + " , " + right + " , " + bottom);
+                        canvas.drawRect(left, top, right, bottom, myPaint);
+                    }
+                    for (org.opencv.core.Rect face : faces1.toArray()) {
+                        int top = (int) (face.tl().y*2);
+                        int left = (int) (face.tl().x*2);
+                        int bottom = (int) (face.br().y*2);
+                        int right = (int) (face.br().x*2);
+                        canvas.drawRect(left, top, right, bottom, myPaint);
+                    }
+                    for (org.opencv.core.Rect face : faces2.toArray()) {
+                        int top = (int) (face.tl().y*2);
+                        int left = (int) (face.tl().x*2);
+                        int bottom = (int) (face.br().y*2);
+                        int right = (int) (face.br().x*2);
+                        canvas.drawRect(canvas.getWidth() - left, top, canvas.getWidth() - right, bottom, myPaint);
+                    }
+
+                    canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), borderPaint);
+
+                    Log.d(TAG,"Still drawing");
+
+                    if (canvas != null) {
+                        if (surface == null) break;
+                        // if (surface)
+
+                        surface.unlockCanvasAndPost(canvas);
+                    }
+
+
+                } catch (IllegalArgumentException iae) {
+                    Log.d("classify", "unlockCanvasAndPost failed: " + iae.getMessage());
+                    break;
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                    break;
+                }
+                try {
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
+        }
+
+        private void prepareClassifiers() {
+            try {
+                InputStream is = getPluginContext().getResources().openRawResource(R.raw.haarcascade_frontalface_alt);
+
+                File sdCard = Environment.getExternalStorageDirectory();
+                File cascadeDir = new File (sdCard.getAbsolutePath() + "/skynet/cascade");
+                if (!cascadeDir.isDirectory())cascadeDir.mkdirs();
+                File mCascadeFile = new File(cascadeDir, "haarcascade_frontalface_default.xml");
+                FileOutputStream os = new FileOutputStream(mCascadeFile);
+
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = is.read(buffer)) != -1) {
+                    os.write(buffer, 0, bytesRead);
+                }
+                is.close();
+                os.close();
+                haar_faceClassifier = new CascadeClassifier(mCascadeFile.getAbsolutePath());
+                if (haar_faceClassifier.empty()) {
+                    Log.e("classify", "Failed to load face cascade classifier");
+                    haar_faceClassifier = null;
+                } else
+                    Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
+
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+
+            try {
+                InputStream is = getPluginContext().getResources().openRawResource(R.raw.haarcascade_profileface);
+                File sdCard = Environment.getExternalStorageDirectory();
+                File cascadeDir = new File (sdCard.getAbsolutePath() + "/skynet/cascade");
+                if (!cascadeDir.isDirectory())cascadeDir.mkdirs();
+                File mCascadeFile = new File(cascadeDir, "haarcascade_profileface.xml");
+                FileOutputStream os = new FileOutputStream(mCascadeFile);
+
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = is.read(buffer)) != -1) {
+                    os.write(buffer, 0, bytesRead);
+                }
+                is.close();
+                os.close();
+                haar_sideClassifier = new CascadeClassifier(mCascadeFile.getAbsolutePath());
+                if (haar_sideClassifier.empty()) {
+                    Log.e("classify", "Failed to load sideprof cascade classifier");
+                    haar_sideClassifier = null;
+                } else
+                    Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+
+
+        /**
+         * Tells the thread to stop running.
+         */
+        public void halt() {
+            synchronized (mLock) {
+                mDone = true;
+                mLock.notify();
+            }
+        }
+
+        @Override   // will be called on UI thread
+        public void onSurfaceTextureAvailable(SurfaceTexture st, int width, int height) {
+            //Log.d("bitmap", "onSurfaceTextureAvailable(" + width + "x" + height + ")");
+           // Log.i("bitmap", "surface tex2: " + st.toString());
+            mWidth = width;
+            mHeight = height;
+            synchronized (mLock) {
+                mSurfaceTexture = st;
+                mLock.notify();
+            }
+            //adjustAspectRatio();
+        }
+
+        @Override   // will be called on UI thread
+        public void onSurfaceTextureSizeChanged(SurfaceTexture st, int width, int height) {
+            //Log.d("bitmap", "onSurfaceTextureSizeChanged(" + width + "x" + height + ")");
+            mWidth = width;
+            mHeight = height;
+        }
+
+        @Override   // will be called on UI thread
+        public boolean onSurfaceTextureDestroyed(SurfaceTexture st) {
+            //Log.d("bitmap", "onSurfaceTextureDestroyed");
+
+            synchronized (mLock) {
+                mSurfaceTexture = null;
+            }
+            return true;
+        }
+
+        @Override   // will be called on UI thread
+        public void onSurfaceTextureUpdated(SurfaceTexture st) {
+            //Log.d(TAG, "onSurfaceTextureUpdated");
+        }
+
+        private void adjustAspectRatio() {
+            Log.i(TAG,"changing aspect ratio");
+            int viewWidth = djiVideoSurface.getWidth();
+            int viewHeight = djiVideoSurface.getHeight();
+            Log.i(TAG,"viewWidth :" + viewWidth + " viewHeight: " +viewHeight);
+            double aspectRatio = (double) VIDEO_HEIGHT / VIDEO_WIDTH;
+
+            int newWidth, newHeight;
+            if (viewHeight > (int) (viewWidth * aspectRatio)) {
+                // limited by narrow width; restrict height
+                newWidth = viewWidth;
+                newHeight = (int) (viewWidth * aspectRatio);
+            } else {
+                // limited by short height; restrict width
+                newWidth = (int) (viewHeight / aspectRatio);
+                newHeight = viewHeight;
+            }
+            int xoff = (viewWidth - newWidth) / 2;
+            int yoff = (viewHeight - newHeight) / 2;
+            Log.v(TAG, "video=" + VIDEO_WIDTH + "x" + VIDEO_HEIGHT +
+                    " view=" + viewWidth + "x" + viewHeight +
+                    " newView=" + newWidth + "x" + newHeight +
+                    " off=" + xoff + "," + yoff);
+
+            Matrix txform = new Matrix();
+            djiVideoSurface.getTransform(txform);
+            txform.setScale((float) newWidth / viewWidth, (float) newHeight / viewHeight);
+            //txform.postRotate(10);          // just for fun
+            txform.postTranslate(xoff, yoff);
+            djiVideoSurface.setTransform(txform);
+        }
+    }
+
 
 
 

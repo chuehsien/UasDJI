@@ -13,7 +13,7 @@ dependencies {
     provided files('../../../ATAKMapEngine/build/libs/classes.jar')
     provided files('../../../ATAK/build/libs/classes.jar')
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile project(':dJISDKLIB')
+    compile project(':opencv')
 }
 
 def getSvnRevision() {
@@ -97,7 +97,7 @@ android {
             renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
-            jniLibs.srcDirs = ['libs']
+            jniLibs.srcDirs = ['src/main/jniLibs']
 
 
         }

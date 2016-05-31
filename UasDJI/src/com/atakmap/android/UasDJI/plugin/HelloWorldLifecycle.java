@@ -6,14 +6,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import com.atakmap.android.UasDJI.HelloWorldDropDownReceiver;
 import com.atakmap.android.UasDJI.HelloWorldMapComponent;
 import com.atakmap.android.UasDJI.HelloWorldWidget;
 import com.atakmap.android.maps.MapComponent;
 import com.atakmap.android.maps.MapView;
-import com.example.chueh.aidl.atakservice.IATAKService;
 
-
-import dji.sdk.Codec.DJICodecManager;
 import transapps.maps.plugin.lifecycle.Lifecycle;
 import android.app.Activity;
 import android.app.Service;
@@ -22,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -42,15 +41,19 @@ public class HelloWorldLifecycle implements Lifecycle {
     static final int MSG_IS_DJIAPP_CONNECTED = 4;
     static final int MSG_IS_ATAKAPP_CONNECTED = 5;
     static final int MSG_START_BRIDGE = 6;
+    static final int MSG_STOP_BRIDGE = 7;
+    static final int MSG_HELLO_FROM_ATAK = 8;
+    static final int MSG_HELLO_FROM_DJI = 9;
+    static final int MSG_HELLO_FROM_SERVICE = 10;
     static final int FALSE = 000;
     static final int TRUE = 111;
 
-
-    public IATAKService ATAKService;
+    private CountDownTimer helloTimer;
+//    public IATAKService ATAKService;
     ServiceConnection serviceConnection;
     boolean mBound = false;
     Messenger mService = null;
-
+    private Handler mHandler = null;
     
     private final Context pluginContext;
     private final Collection<MapComponent> overlays;
@@ -76,7 +79,6 @@ public class HelloWorldLifecycle implements Lifecycle {
 
 
     public HelloWorldLifecycle(Context ctx) {
-        Looper.prepare();
         this.pluginContext = ctx;
         this.overlays = new LinkedList<MapComponent>();
         this.mapView = null;
@@ -119,67 +121,49 @@ public class HelloWorldLifecycle implements Lifecycle {
 
     }
 
-    public int callservice(int a, int b){
+    private void sayHelloToService(){
+        Log.d(TAG,"hello to service!");
+        Message msg = Message.obtain(null, MSG_HELLO_FROM_ATAK, 0, 0);
         try {
-            return ATAKService.add(a,b);
+            mService.send(msg);
         } catch (RemoteException e) {
-            return -1;
+            e.printStackTrace();
         }
     }
+
+
     void initConnection() {
 
-         mActivityMessenger = new Messenger(
-                new ActivityHandler());
-//        AddServiceConnection = new ServiceConnection() {
-//
-//            @Override
-//            public void onServiceDisconnected(ComponentName name) {
-//                // TODO Auto-generated method stub
-//                ATAKService = null;
-//                Toast.makeText(pluginContext, "Service Disconnected",
-//                        Toast.LENGTH_SHORT).show();
-//                //Log.d("IRemote", "Binding - Service disconnected");
-//            }
-//
-//            @Override
-//            public void onServiceConnected(ComponentName name, IBinder service) {
-//                // TODO Auto-generated method stub
-//                ATAKService = IATAKService.Stub.asInterface((IBinder) service);
-//                Toast.makeText(pluginContext,
-//                        "ATAK Service Connected", Toast.LENGTH_SHORT)
-//                        .show();
-//               // Log.d("IRemote", "Binding is done - Service connected");
-//            }
-//        };
-//        if (ATAKService == null) {
-//            Intent it = new Intent();
-//            it.setAction("service.ATAKService");
-//          //  pluginContext.startService(it);
-//            // binding to remote service
-//            pluginContext.bindService(it, AddServiceConnection, Service.BIND_AUTO_CREATE);
-//        }
+         mActivityMessenger = new Messenger(new ActivityHandler());
+
         serviceConnection = new ServiceConnection() {
             public void onServiceConnected(ComponentName className, IBinder service) {
-                // This is called when the connection with the service has been
-                // established, giving us the object we can use to
-                // interact with the service.  We are communicating with the
-                // service using a Messenger, so here we get a client-side
-                // representation of that from the raw IBinder object.
-                Log.d(TAG,"Connected to service!");
+                Log.d(TAG,"Connected to DJI service!");
                 mService = new Messenger(service);
                 mBound = true;
+                helloTimer = new CountDownTimer(5000,4000) {
+                    @Override
+                    public void onTick(long l) {
+                        //
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        sayHelloToService();
+                        helloTimer.cancel();
+                        helloTimer.start();
+                    }
+                }.start();
 
             }
 
             public void onServiceDisconnected(ComponentName className) {
-                // This is called when the connection with the service has been
-                // unexpectedly disconnected -- that is, its process crashed.
                 Log.d(TAG,"Disconnected from service!");
                 mService = null;
                 mBound = false;
+                inStream = null;
             }
         };
-
 
         if (!mBound) {
             Log.d(TAG,"binding to service");
@@ -187,10 +171,12 @@ public class HelloWorldLifecycle implements Lifecycle {
             intent.setPackage("com.example.chueh.skynetdji");
             // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getPluginContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+
         }
 
 
     }
+
     private Messenger mActivityMessenger;
 
     private class ActivityHandler extends Handler {
@@ -202,13 +188,19 @@ public class HelloWorldLifecycle implements Lifecycle {
 
         @Override
         public void handleMessage(Message msg) {
-            Log.d(TAG,"msg from service");
+            //Log.d(TAG,"msg from service");
             switch (msg.what) {
                 case MSG_STREAM: {
-                    Log.d(TAG,"Received pfd from service");
+
                     ParcelFileDescriptor pfd = msg.getData().getParcelable("pfd");
-                    setReadPfd(pfd);
-                    Toast.makeText(pluginContext, "Conencted to DJI app", Toast.LENGTH_SHORT).show();
+                    if (pfd!=null)setReadPfd(pfd);
+                    String status = msg.getData().getString("status");
+                    HelloWorldDropDownReceiver.getInstance().updateProductStatus(status);
+                }
+
+                case MSG_HELLO_FROM_SERVICE:{
+                    String status = msg.getData().getString("status");
+                    HelloWorldDropDownReceiver.getInstance().updateProductStatus(status);
                 }
             }
         }
@@ -218,12 +210,12 @@ public class HelloWorldLifecycle implements Lifecycle {
     public void setReadPfd(ParcelFileDescriptor readPfd){
         Log.d(TAG,"pipe created, registering outputstream");
         inStream = new ParcelFileDescriptor.AutoCloseInputStream(readPfd);
-        Log.d(TAG,"in pfd is: " + inStream);
+        Log.d(TAG,"in pfd is: " + readPfd.toString());
 
     }
 
-    public void sayHello() {
-        Log.d(TAG,"atakapp --HELLO--> service");
+    public void initConnectionWithService() {
+        //Log.d(TAG,"atakapp --HELLO--> service");
         if (!mBound) return;
         // Create and send a message to the service, using a supported 'what' value
         Message msg = Message.obtain(null, MSG_MESSENGER_ATAKAPP, 0, 0);
@@ -290,17 +282,6 @@ public class HelloWorldLifecycle implements Lifecycle {
     public void onStop() {
         for(MapComponent c : this.overlays)
             c.onStop(this.pluginContext, this.mapView);
-    }
-
-
-    public ParcelFileDescriptor startDJIVid() {
-        Log.d(TAG,"startDJIvid called in client");
-        try {
-            return ATAKService.startDJIVid();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }
 

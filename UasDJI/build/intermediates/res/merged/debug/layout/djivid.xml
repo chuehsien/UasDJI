@@ -4,29 +4,48 @@
     android:layout_height="match_parent"
     android:keepScreenOn="true">
 
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="connect to service"
-            android:id="@+id/connect"/>
+            android:orientation="horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="start stream"
-            android:id="@+id/stream"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="connect to service"
+                android:id="@+id/connect"/>
 
-    </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="start stream"
+                android:id="@+id/stream"
+                android:enabled="false"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/statustext"
+                android:text="Status"/>
+
+        </LinearLayout>
 
 
-    <TextureView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/dji_video_surface"/>
+
+        <TextureView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/dji_video_surface"/>
+
+        <TextureView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/dji_overlay_surface"/>
+
+    </FrameLayout>
+
+
 </LinearLayout>

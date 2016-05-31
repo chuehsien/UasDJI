@@ -9,14 +9,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/UasDJI" />
-            <option value="$PROJECT_DIR$/dJISDKLIB" />
+            <option value="$PROJECT_DIR$/opencv" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/UasDJI" />
-            <option value="$PROJECT_DIR$/dJISDKLIB" />
+            <option value="$PROJECT_DIR$/opencv" />
           </set>
         </option>
       </GradleProjectSettings>

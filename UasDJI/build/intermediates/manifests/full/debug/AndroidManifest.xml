@@ -44,39 +44,47 @@
             android:name="plugin-api"
             android:value="com.atakmap.app@3.3" />
 
-        <activity
-            android:name="com.atakmap.android.UasDJI.DJI.DJIMainActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="nosensor"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <!-- <activity -->
+        <!-- android:name=".DJI.DJIMainActivity" -->
+        <!-- android:configChanges="orientation" -->
+        <!-- android:screenOrientation="nosensor" -->
+        <!-- android:theme="@android:style/Theme.Black.NoTitleBar" -->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
-        <!-- DJI SDK -->
-        <uses-library android:name="com.android.future.usb.accessory" />
+        <!-- &gt; -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
 
-        <meta-data
-            android:name="com.dji.sdk.API_KEY"
-            android:value="e38d6c9f995c5c01a7587f9c" />
 
-        <activity
-            android:name="dji.sdk.SDKManager.DJIAoaControllerActivity"
-            android:theme="@android:style/Theme.Translucent" >
-            <intent-filter>
-                <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
-            </intent-filter>
+        <!-- &lt;!&ndash; DJI SDK &ndash;&gt; -->
+        <!-- <uses-library android:name="com.android.future.usb.accessory" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="com.dji.sdk.API_KEY" -->
+        <!-- android:value="e38d6c9f995c5c01a7587f9c" /> -->
 
-            <meta-data
-                android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
-                android:resource="@xml/accessory_filter" />
-        </activity>
 
-        <service android:name="dji.sdk.SDKManager.DJIGlobalService" >
-        </service>
+        <!-- <activity -->
+        <!-- android:name="dji.sdk.SDKManager.DJIAoaControllerActivity" -->
+        <!-- android:theme="@android:style/Theme.Translucent" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" /> -->
+        <!-- </intent-filter> -->
+
+
+        <!-- <meta-data -->
+        <!-- android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" -->
+        <!-- android:resource="@xml/accessory_filter" /> -->
+
+
+        <!-- </activity> -->
+
+
+        <!-- <service android:name="dji.sdk.SDKManager.DJIGlobalService" > -->
+        <!-- </service> -->
+
 
         <!-- <service -->
         <!-- android:name="com.atakmap.android.UasDJI.notification.NotificationService" -->

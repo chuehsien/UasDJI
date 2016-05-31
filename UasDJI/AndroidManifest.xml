@@ -21,7 +21,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
@@ -48,41 +47,41 @@
 
 
 
-        <activity
-            android:name=".DJI.DJIMainActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="nosensor"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
+        <!--<activity-->
+            <!--android:name=".DJI.DJIMainActivity"-->
+            <!--android:configChanges="orientation"-->
+            <!--android:screenOrientation="nosensor"-->
+            <!--android:theme="@android:style/Theme.Black.NoTitleBar"-->
 
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            <!--&gt;-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
 
-        <!-- DJI SDK -->
-        <uses-library android:name="com.android.future.usb.accessory" />
-        <meta-data
-            android:name="com.dji.sdk.API_KEY"
-            android:value="e38d6c9f995c5c01a7587f9c" />
+        <!--&lt;!&ndash; DJI SDK &ndash;&gt;-->
+        <!--<uses-library android:name="com.android.future.usb.accessory" />-->
+        <!--<meta-data-->
+            <!--android:name="com.dji.sdk.API_KEY"-->
+            <!--android:value="e38d6c9f995c5c01a7587f9c" />-->
 
-        <activity
-            android:name="dji.sdk.SDKManager.DJIAoaControllerActivity"
-            android:theme="@android:style/Theme.Translucent" >
-            <intent-filter>
-                <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
-            </intent-filter>
+        <!--<activity-->
+            <!--android:name="dji.sdk.SDKManager.DJIAoaControllerActivity"-->
+            <!--android:theme="@android:style/Theme.Translucent" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />-->
+            <!--</intent-filter>-->
 
-            <meta-data
-                android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
-                android:resource="@xml/accessory_filter" />
+            <!--<meta-data-->
+                <!--android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"-->
+                <!--android:resource="@xml/accessory_filter" />-->
 
-        </activity>
+        <!--</activity>-->
 
-        <service android:name="dji.sdk.SDKManager.DJIGlobalService" >
-        </service>
+        <!--<service android:name="dji.sdk.SDKManager.DJIGlobalService" >-->
+        <!--</service>-->
 
 
         <!--<service-->

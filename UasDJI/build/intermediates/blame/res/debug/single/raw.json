@@ -1,19 +1,47 @@
 [
     {
-        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_1280x720_ins.h264",
-        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_1280x720_ins.h264"
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/lbpcascade_profileface.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/lbpcascade_profileface.xml"
     },
     {
-        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_1280x720_wm220.h264",
-        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_1280x720_wm220.h264"
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/lbpcascade_silverware.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/lbpcascade_silverware.xml"
     },
     {
         "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_640x480.h264",
         "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_640x480.h264"
     },
     {
-        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_1280_ins.h264",
-        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_1280_ins.h264"
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_licence_plate_rus_16stages.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_licence_plate_rus_16stages.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_frontalface_alt_tree.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_frontalface_alt_tree.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_russian_plate_number.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_russian_plate_number.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_1280x720_ins.h264",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_1280x720_ins.h264"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/lbpcascade_frontalface.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/lbpcascade_frontalface.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_frontalcatface_extended.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_frontalcatface_extended.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_frontalcatface.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_frontalcatface.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_1280x720_wm220.h264",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_1280x720_wm220.h264"
     },
     {
         "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_1280_3s.h264",
@@ -21,15 +49,11 @@
     },
     {
         "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_960x720_3s.h264",
-        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_960x720_3s.h264"
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/iframe_960x720_3s.h264"
     },
     {
         "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/flyc_param_infos",
         "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/flyc_param_infos"
-    },
-    {
-        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_720x480_wm620.h264",
-        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_720x480_wm620.h264"
     },
     {
         "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_1280x720_p4.h264",
@@ -40,6 +64,54 @@
         "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/gimbal_param_infos"
     },
     {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_eye_tree_eyeglasses.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_eye_tree_eyeglasses.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_1280_ins.h264",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_1280_ins.h264"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_frontalface_default.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_frontalface_default.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_smile.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_smile.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_upperbody.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_upperbody.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_720x480_wm620.h264",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_720x480_wm620.h264"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_lefteye_2splits.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_lefteye_2splits.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/hogcascade_pedestrians.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/hogcascade_pedestrians.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_frontalface_alt2.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_frontalface_alt2.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/lbpcascade_frontalcatface.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/lbpcascade_frontalcatface.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_fullbody.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_fullbody.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_profileface.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_profileface.xml"
+    },
+    {
         "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_960_3s.h264",
         "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_960_3s.h264"
     },
@@ -48,19 +120,35 @@
         "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_848x480.h264"
     },
     {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_frontalface_alt.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_frontalface_alt.xml"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_lowerbody.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_lowerbody.xml"
+    },
+    {
         "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/effect_tick.ogg",
         "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/effect_tick.ogg"
+    },
+    {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_eye.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_eye.xml"
     },
     {
         "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/flyforbid.json",
         "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/flyforbid.json"
     },
     {
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/dock.ogg",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/dock.ogg"
+    },
+    {
         "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/iframe_1280x720_3s.h264",
         "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/iframe_1280x720_3s.h264"
     },
     {
-        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/dock.ogg",
-        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/exploded-aar/UasDJI/dJISDKLIB/unspecified/res/raw/dock.ogg"
+        "merged": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/build/intermediates/res/merged/debug/raw/haarcascade_righteye_2splits.xml",
+        "source": "/home/chue/Documents/H4DSVN/trunk/plugins/UasDJI/UasDJI/res/raw/haarcascade_righteye_2splits.xml"
     }
 ]

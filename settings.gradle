@@ -1,1 +1,1 @@
-include ':UasDJI', ':dJISDKLIB'
+include ':UasDJI', ':opencv'

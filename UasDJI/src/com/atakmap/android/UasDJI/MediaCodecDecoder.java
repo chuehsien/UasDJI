@@ -1,5 +1,6 @@
 package com.atakmap.android.UasDJI;
 
+import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.media.MediaCodec;
 import android.media.MediaFormat;
@@ -221,7 +222,6 @@ public class MediaCodecDecoder extends Thread implements TextureView.SurfaceText
         byte[] buffer = new byte[800]; // Adjust if you want
         int bytesRead;
         workerArrI = 0;
-        byte[] csd_0 = new byte[59];
 //        byte[] firstFrame = new byte[781];
 
         ByteArrayOutputStream firstFrame = new ByteArrayOutputStream();
@@ -255,6 +255,11 @@ public class MediaCodecDecoder extends Thread implements TextureView.SurfaceText
         }
 
         startMs = System.currentTimeMillis();
+
+        byte[] b = firstFrame.toByteArray();
+        format.setByteBuffer("csd-0", ByteBuffer.wrap(b));
+
+
         mMediaCodec.configure(format, surface, null, 0);
         if (VERBOSE) Log.d(LOG_TAG, "Decoder configured.");
 
@@ -265,8 +270,8 @@ public class MediaCodecDecoder extends Thread implements TextureView.SurfaceText
         byteCollected = new ByteArrayOutputStream();
         AUDCollected = new ByteArrayOutputStream();
         findingAUD = true;
-        byte[] b = firstFrame.toByteArray();
-        decodeData(b,b.length);
+
+//        decodeData(b,b.length);
     }
 
 
@@ -328,22 +333,8 @@ public class MediaCodecDecoder extends Thread implements TextureView.SurfaceText
             Log.e(LOG_TAG, "Decoder is not configured yet.");
             return;
         }
-//        Log.d(TAG,"In decode Data");
-//        if (firstNALUsent == false){
-//            stage = STILL_LOOKING;
-//            for (int j = 0; j < bytesRead; j++){
-//
-//                workerArr[workerArrI++] = data[j];
-//
-//                if  (checkState(data[j])){
-//                    //first sps+pps+next header. need to decide whether to add in iframe.
-//                }
-//
-//
-//            }
-//        }
-
         int inIndex = mMediaCodec.dequeueInputBuffer(mTimeoutUs);
+        //Log.d(LOG_TAG,"Inputbuffer: " + inIndex);
         if (inIndex >= 0) {
             ByteBuffer buffer;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -389,6 +380,7 @@ public class MediaCodecDecoder extends Thread implements TextureView.SurfaceText
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
         setSurface(new Surface(surfaceTexture));
+        Log.d(TAG,"onSurfacetexAvailable: " + i + " , " + i1);
         width = i;
         height = i1;
     }
@@ -407,4 +399,37 @@ public class MediaCodecDecoder extends Thread implements TextureView.SurfaceText
     public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
 
     }
+
+
+//    private void adjustAspectRatio() {
+//        Log.i("FPV","changing aspect ratio");
+//        int viewWidth = mVideoSurface.getWidth();
+//        int viewHeight = mVideoSurface.getHeight();
+//        Log.i("FPV","viewWidth :" + viewWidth + " viewHeight: " +viewHeight);
+//        double aspectRatio = (double) VIDEO_HEIGHT / VIDEO_WIDTH;
+//
+//        int newWidth, newHeight;
+//        if (viewHeight > (int) (viewWidth * aspectRatio)) {
+//            // limited by narrow width; restrict height
+//            newWidth = viewWidth;
+//            newHeight = (int) (viewWidth * aspectRatio);
+//        } else {
+//            // limited by short height; restrict width
+//            newWidth = (int) (viewHeight / aspectRatio);
+//            newHeight = viewHeight;
+//        }
+//        int xoff = (viewWidth - newWidth) / 2;
+//        int yoff = (viewHeight - newHeight) / 2;
+//        Log.v(TAG, "video=" + VIDEO_WIDTH + "x" + VIDEO_HEIGHT +
+//                " view=" + viewWidth + "x" + viewHeight +
+//                " newView=" + newWidth + "x" + newHeight +
+//                " off=" + xoff + "," + yoff);
+//
+//        Matrix txform = new Matrix();
+//        mVideoSurface.getTransform(txform);
+//        txform.setScale((float) newWidth / viewWidth, (float) newHeight / viewHeight);
+//        //txform.postRotate(10);          // just for fun
+//        txform.postTranslate(xoff, yoff);
+//        mVideoSurface.setTransform(txform);
+//    }
 }
