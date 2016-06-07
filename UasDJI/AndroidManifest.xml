@@ -6,35 +6,7 @@
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22" />
 
 
-    <!-- DJI SDK -->
-    <!-- DJI SDK need permission -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-feature
-        android:name="android.hardware.usb.host"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.usb.accessory"
-        android:required="true" />
-
-    <!-- DJI SDK -->
-
-
     <application
-        android:name=".DJI.DJIBackgroundApp"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="Hello World Tool"
@@ -44,57 +16,6 @@
         >
 
         <meta-data android:name="plugin-api" android:value="com.atakmap.app@3.3"/>
-
-
-
-        <!--<activity-->
-            <!--android:name=".DJI.DJIMainActivity"-->
-            <!--android:configChanges="orientation"-->
-            <!--android:screenOrientation="nosensor"-->
-            <!--android:theme="@android:style/Theme.Black.NoTitleBar"-->
-
-            <!--&gt;-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
-
-
-        <!--&lt;!&ndash; DJI SDK &ndash;&gt;-->
-        <!--<uses-library android:name="com.android.future.usb.accessory" />-->
-        <!--<meta-data-->
-            <!--android:name="com.dji.sdk.API_KEY"-->
-            <!--android:value="e38d6c9f995c5c01a7587f9c" />-->
-
-        <!--<activity-->
-            <!--android:name="dji.sdk.SDKManager.DJIAoaControllerActivity"-->
-            <!--android:theme="@android:style/Theme.Translucent" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />-->
-            <!--</intent-filter>-->
-
-            <!--<meta-data-->
-                <!--android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"-->
-                <!--android:resource="@xml/accessory_filter" />-->
-
-        <!--</activity>-->
-
-        <!--<service android:name="dji.sdk.SDKManager.DJIGlobalService" >-->
-        <!--</service>-->
-
-
-        <!--<service-->
-            <!--android:name="com.atakmap.android.UasDJI.notification.NotificationService"-->
-            <!--android:label="Plugin Notification Service">-->
-
-            <!--<intent-filter>-->
-                <!--<action android:name="com.atakmap.android.UasDJI.notification.NotificationService"/>-->
-            <!--</intent-filter>-->
-        <!--</service>-->
-
-
-
 
     </application>
 

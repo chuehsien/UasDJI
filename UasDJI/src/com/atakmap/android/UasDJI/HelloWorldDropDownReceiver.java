@@ -113,10 +113,6 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
         LayoutInflater inflater = 
                (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         helloView = inflater.inflate(R.layout.djivid, null);
-//        mVideoSurface = (TextureView)helloView.findViewById(R.id.dji_video_surface);
-//        if (null != mVideoSurface) {
-//            mVideoSurface.setSurfaceTextureListener(this);
-//        }
 
         Button connectB = (Button) helloView.findViewById(R.id.connect);
         connectB.setOnClickListener(new OnClickListener() {
@@ -143,8 +139,7 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
 
         djiVideoSurface = (TextureView) helloView.findViewById(R.id.dji_video_surface);
-//        mRenderer = new Renderer();
-//        mRenderer.start();
+
         mDecoder = new MediaCodecDecoder();
         mDecoder.Start();
 
@@ -159,8 +154,7 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
 
         djiOverlaySurface = (TextureView) helloView.findViewById(R.id.dji_overlay_surface);
-//        mRenderer = new Renderer();
-//        mRenderer.start();
+
         mRenderer = new Renderer();
         mRenderer.start();
 
@@ -187,19 +181,16 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
     public static String bytesToHexString(byte[] bytes, int count){
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < count; i++){
-
             sb.append(String.format("%02x ", (bytes[i])&0xff));
         }
         return sb.toString();
     }
 
-
-
     public void disposeImpl() {
     }
 
     class ReceiverThread extends Thread{
-        byte[] buffer = new byte[2048]; // Adjust if you want
+        byte[] buffer = new byte[2048];
         int bytesRead;
 
         private final int STATE_INIT = 0;
@@ -264,7 +255,6 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
                             byte[] b = collectedAUD.toByteArray();
                             mDecoder.OnRecvEncodedData(b, b.length);
                             collectedAUD.reset();
-                          //  collectedAUD.write(buffer,0,len); -- throw away the AUD that delimits packets (this is the packet 6 in between large packets
                         }else {
                             collectedAUD.write(buffer,0,len);
                         }
@@ -279,7 +269,6 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
                         }
                         break;
                 }
-               // Log.d(TAG,"STATE: " + STATE + " bytesread: " + len);
             }else{
                 Log.e(TAG,"stripped packet less than 5 bytes long!");
             }
@@ -291,21 +280,16 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
         public void run(){
             Log.d(TAG, "service: Thread running");
 
+            // the dji app sends a delimiter of 0 0 1 0 0 sizehiByte sizeloByte. we strip that and send the full packet to the decoder.
             ByteArrayOutputStream delimBuilder = new ByteArrayOutputStream(7);
             while (true) {
                 try {
-//                    int br;
-//                    while ((br = is.read(buffer)) != -1) {
-//                        newStripedPacket(buffer, br);
-//                    }
-
                     //find delim
                     delimBuilder.reset();
                     int b;
                     collectedStripedPacket.reset();
 
                     while ((b = is.read()) != -1) {
-                       // Log.d(TAG, "Searching for delimL: " + b);
                         delimBuilder.write(b);
                         byte[] test = delimBuilder.toByteArray();
                         int len = test.length;
@@ -313,7 +297,6 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
                         if (test[len - 7] == 0 && test[len - 6] == 0 && test[len - 5] == 1 && test[len - 4] == 0 && test[len - 3] == 0) {
                             delimBuilder.reset();
                             int packetsize = (((test[len - 2]) & 0xFF) << 8) + ((test[len - 1]) & 0xFF);//look at last 7 bytes
-                            // Log.d(TAG,"size from delim: " + packetsize);
                             int br;
                             int totalsize = 0;
                             int sizeToRead = packetsize;
@@ -325,13 +308,9 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
                                     continue;
                                 } else {
                                     byte[] stripedPacket = collectedStripedPacket.toByteArray();
-                                    //send buffer for next stage processing
-                                    //Log.d(TAG,"Todecoder: " + stripedPacket.length + "- " + bytesToHexString(stripedPacket,stripedPacket.length));
                                     newStripedPacket(stripedPacket, stripedPacket.length);
-
                                     break;
                                 }
-
                             }
                             break;
                         } else {
@@ -341,7 +320,6 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.d(TAG, "service: copyStream failed!");
                     return;
                 }
             }
@@ -351,17 +329,9 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "showing hello world drop down");
         if (intent.getAction().equals(SHOW_HELLO_WORLD)) {
             showDropDown(helloView, HALF_WIDTH, FULL_HEIGHT,
                     FULL_WIDTH, HALF_HEIGHT, false);
-
-
-//            Intent startServiceIntent =
-//                 new Intent("com.atakmap.android.helloworld.notification.NotificationService");
-//            ComponentName name = getMapView().getContext().startService(startServiceIntent);
-//
-//            manipulateFakeContentProvider();
         }
     }
 
@@ -380,6 +350,9 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
     @Override
     public void onDropDownClose() {
     }
+
+
+    /* ------------------ left over from the example plugin app in the plugin folder ----------------- */
 
     /************************* Helper Methods *************************/
 
@@ -476,6 +449,7 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
          }
     }
 
+/* ------------------ left over from the example plugin app in the plugin folder ----------------- */
 
 
 
@@ -485,10 +459,7 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
 
 
-
-
-
-
+    /* very similar to the one in the dji MainActivity */
     public class Renderer extends Thread implements TextureView.SurfaceTextureListener {
         private Object mLock = new Object();        // guards mSurfaceTexture, mDone
         private boolean mDone;
@@ -513,13 +484,12 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
         }
 
+
         @Override
         public void run() {
             while (true) {
                 SurfaceTexture surfaceTexture = null;
 
-                // Latch the SurfaceTexture when it becomes available.  We have to wait for
-                // the TextureView to create it.
                 synchronized (mLock) {
                     while (!mDone && (surfaceTexture = mSurfaceTexture) == null) {
                         try {
@@ -532,13 +502,9 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
                         break;
                     }
                 }
-                Log.d("bitmap", "Got surfaceTexture=" + surfaceTexture);
-
-                // Render frames until we're told to stop or the SurfaceTexture is destroyed.
                 doAnimation();
             }
 
-//        Log.d(TAG, "Renderer thread exiting");
         }
 
         /**
@@ -560,7 +526,6 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
             synchronized (mLock) {
                 SurfaceTexture surfaceTexture = mSurfaceTexture;
                 if (surfaceTexture == null) {
-                    Log.d("bitmap", "ST null on entry");
                     return;
                 }
                 surface = new Surface(surfaceTexture);
@@ -616,6 +581,7 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
                         bitmapH = b0.getHeight();
                     }
 
+                    // downscale for faster processing
                     Bitmap b = Bitmap.createScaledBitmap(djiVideoSurface.getBitmap(), bitmapW / 2, bitmapH / 2, false);
 //                    Bitmap b = djiVideoSurface.getBitmap();
                     if (mat == null) mat = new Mat(b.getWidth(), b.getHeight(), CvType.CV_8UC1);
@@ -627,43 +593,44 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
                     Imgproc.cvtColor(mat, mat1, Imgproc.COLOR_BGR2GRAY);
                     clahe.apply(mat1, grayMat);
 
-                    Mat grayMat_flipped = new Mat();
-                    flip(grayMat, grayMat_flipped, 1);
-
                     MatOfRect faces0 = new MatOfRect();
                     haar_faceClassifier.detectMultiScale(grayMat, faces0, 1.1, 4, 2, new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
-                    MatOfRect faces1 = new MatOfRect();
-                    haar_sideClassifier.detectMultiScale(grayMat, faces1, 1.1, 4, 2, new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
-                    MatOfRect faces2 = new MatOfRect();
-                    haar_sideClassifier.detectMultiScale(grayMat_flipped, faces2, 1.1, 4, 2, new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
-
-                    //Log.d(TAG,"num faces: " + faces0.size());
                     for (org.opencv.core.Rect face : faces0.toArray()) {
                         int top = (int) (face.tl().y *2) ;
                         int left = (int) (face.tl().x*2) ;
                         int bottom = (int) (face.br().y*2) ;
                         int right = (int) (face.br().x*2) ;
-//                        Log.d(TAG,"Drawing: " + left + " , " + top + " , " + right + " , " + bottom);
                         canvas.drawRect(left, top, right, bottom, myPaint);
                     }
+
+                    /* uncomment to process sideprofiles of images as well*/
+                    /*
+                    Mat grayMat_flipped = new Mat();
+                    flip(grayMat, grayMat_flipped, 1);
+
+                    MatOfRect faces1 = new MatOfRect();
+                    haar_sideClassifier.detectMultiScale(grayMat, faces1, 1.1, 4, 2, new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
+                    MatOfRect faces2 = new MatOfRect();
+                    haar_sideClassifier.detectMultiScale(grayMat_flipped, faces2, 1.1, 4, 2, new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
+
+
                     for (org.opencv.core.Rect face : faces1.toArray()) {
-                        int top = (int) (face.tl().y*2);
-                        int left = (int) (face.tl().x*2);
-                        int bottom = (int) (face.br().y*2);
-                        int right = (int) (face.br().x*2);
+                        int top = (int) (face.tl().y) * 2;
+                        int left = (int) (face.tl().x) * 2;
+                        int bottom = (int) (face.br().y) * 2;
+                        int right = (int) (face.br().x) * 2;
                         canvas.drawRect(left, top, right, bottom, myPaint);
                     }
                     for (org.opencv.core.Rect face : faces2.toArray()) {
-                        int top = (int) (face.tl().y*2);
-                        int left = (int) (face.tl().x*2);
-                        int bottom = (int) (face.br().y*2);
-                        int right = (int) (face.br().x*2);
+                        int top = (int) (face.tl().y) * 2;
+                        int left = (int) (face.tl().x) * 2;
+                        int bottom = (int) (face.br().y) * 2;
+                        int right = (int) (face.br().x) * 2;
                         canvas.drawRect(canvas.getWidth() - left, top, canvas.getWidth() - right, bottom, myPaint);
                     }
+                    */
 
                     canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), borderPaint);
-
-                    Log.d(TAG,"Still drawing");
 
                     if (canvas != null) {
                         if (surface == null) break;
@@ -671,13 +638,8 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
                         surface.unlockCanvasAndPost(canvas);
                     }
-
-
-                } catch (IllegalArgumentException iae) {
-                    Log.d("classify", "unlockCanvasAndPost failed: " + iae.getMessage());
-                    break;
-                } catch (Exception e1) {
-                    e1.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                     break;
                 }
                 try {
@@ -691,6 +653,7 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
         }
 
+        //slightly modified to fit the atak app context.
         private void prepareClassifiers() {
             try {
                 InputStream is = getPluginContext().getResources().openRawResource(R.raw.haarcascade_frontalface_alt);
@@ -761,28 +724,22 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
         @Override   // will be called on UI thread
         public void onSurfaceTextureAvailable(SurfaceTexture st, int width, int height) {
-            //Log.d("bitmap", "onSurfaceTextureAvailable(" + width + "x" + height + ")");
-           // Log.i("bitmap", "surface tex2: " + st.toString());
             mWidth = width;
             mHeight = height;
             synchronized (mLock) {
                 mSurfaceTexture = st;
                 mLock.notify();
             }
-            //adjustAspectRatio();
         }
 
         @Override   // will be called on UI thread
         public void onSurfaceTextureSizeChanged(SurfaceTexture st, int width, int height) {
-            //Log.d("bitmap", "onSurfaceTextureSizeChanged(" + width + "x" + height + ")");
             mWidth = width;
             mHeight = height;
         }
 
         @Override   // will be called on UI thread
         public boolean onSurfaceTextureDestroyed(SurfaceTexture st) {
-            //Log.d("bitmap", "onSurfaceTextureDestroyed");
-
             synchronized (mLock) {
                 mSurfaceTexture = null;
             }
@@ -791,7 +748,6 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
 
         @Override   // will be called on UI thread
         public void onSurfaceTextureUpdated(SurfaceTexture st) {
-            //Log.d(TAG, "onSurfaceTextureUpdated");
         }
 
         private void adjustAspectRatio() {
@@ -821,7 +777,6 @@ public class HelloWorldDropDownReceiver extends DropDownReceiver implements
             Matrix txform = new Matrix();
             djiVideoSurface.getTransform(txform);
             txform.setScale((float) newWidth / viewWidth, (float) newHeight / viewHeight);
-            //txform.postRotate(10);          // just for fun
             txform.postTranslate(xoff, yoff);
             djiVideoSurface.setTransform(txform);
         }

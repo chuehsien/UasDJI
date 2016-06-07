@@ -169,26 +169,18 @@ public class HelloWorldLifecycle implements Lifecycle {
             Log.d(TAG,"binding to service");
             Intent intent = new Intent("com.example.chueh.skynetdji.ATAKServiceHandler");
             intent.setPackage("com.example.chueh.skynetdji");
-            // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getPluginContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 
         }
-
 
     }
 
     private Messenger mActivityMessenger;
 
     private class ActivityHandler extends Handler {
-//        private final WeakReference<MainActivity> mActivity;
-
-//        public ActivityHandler(MainActivity activity) {
-//            mActivity = new WeakReference<MainActivity>(activity);
-//        }
 
         @Override
         public void handleMessage(Message msg) {
-            //Log.d(TAG,"msg from service");
             switch (msg.what) {
                 case MSG_STREAM: {
 
@@ -204,7 +196,6 @@ public class HelloWorldLifecycle implements Lifecycle {
                 }
             }
         }
-
     }
 
     public void setReadPfd(ParcelFileDescriptor readPfd){
@@ -215,9 +206,7 @@ public class HelloWorldLifecycle implements Lifecycle {
     }
 
     public void initConnectionWithService() {
-        //Log.d(TAG,"atakapp --HELLO--> service");
         if (!mBound) return;
-        // Create and send a message to the service, using a supported 'what' value
         Message msg = Message.obtain(null, MSG_MESSENGER_ATAKAPP, 0, 0);
         msg.replyTo = mActivityMessenger;
         try {
@@ -230,7 +219,6 @@ public class HelloWorldLifecycle implements Lifecycle {
     public void startStream() {
         Log.d(TAG,"atakapp --STARTSTREAM--> service");
         if (!mBound) return;
-        // Create and send a message to the service, using a supported 'what' value
         Message msg = Message.obtain(null, MSG_START_BRIDGE, 0, 0);
         try {
             mService.send(msg);
@@ -256,7 +244,7 @@ public class HelloWorldLifecycle implements Lifecycle {
 
     @Override
     public void onFinish() {
-        // XXX - no corresponding MapComponent method
+
     }
 
     @Override
